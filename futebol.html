@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PHZIN TV | Futebol</title>
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+body{
+
+    background:#050505;
+
+    color:white;
+
+    font-family:Arial, Helvetica, sans-serif;
+
+}
+
+
+
+.futebol-page{
+
+    min-height:100vh;
+
+    padding:40px 20px;
+
+}
+
+
+
+.topo-futebol{
+
+    text-align:center;
+
+    margin-bottom:40px;
+
+}
+
+
+
+.logo-futebol{
+
+    font-size:38px;
+
+    font-weight:bold;
+
+}
+
+
+
+.logo-futebol span{
+
+    color:#00ff66;
+
+}
+
+
+
+.topo-futebol h1{
+
+    margin-top:15px;
+
+    font-size:42px;
+
+}
+
+
+
+.topo-futebol p{
+
+    margin-top:10px;
+
+    color:#aaa;
+
+    font-size:18px;
+
+}
+
+
+
+
+.titulo-secao{
+
+    max-width:1200px;
+
+    margin:45px auto 20px;
+
+    font-size:28px;
+
+    color:#00ff66;
+
+}
+
+
+
+
+.jogos-container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(320px,1fr));
+
+    gap:25px;
+
+}
+
+
+
+
+
+.jogo-card{
+
+    background:#111;
+
+    border:1px solid #222;
+
+    border-radius:20px;
+
+    padding:25px;
+
+    transition:.3s;
+
+}
+
+
+
+
+.jogo-card:hover{
+
+    transform:translateY(-5px);
+
+    border-color:#00ff66;
+
+    box-shadow:
+    0 0 20px rgba(0,255,102,.15);
+
+}
+
+
+
+
+.campeonato{
+
+    color:#00ff66;
+
+    font-weight:bold;
+
+    margin-bottom:15px;
+
+}
+
+
+
+
+.data{
+
+    color:#aaa;
+
+    margin-bottom:20px;
+
+}
+
+
+
+
+.times{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+
+
+
+.time{
+
+    width:110px;
+
+    text-align:center;
+
+    font-weight:bold;
+
+    font-size:14px;
+
+}
+
+
+
+
+
+.time img{
+
+    width:60px;
+
+    height:60px;
+
+    object-fit:contain;
+
+    display:block;
+
+    margin:auto;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.placar{
+
+    text-align:center;
+
+}
+
+
+
+.resultado{
+
+    font-size:32px;
+
+    color:#00ff66;
+
+    font-weight:bold;
+
+}
+
+
+
+.vs{
+
+    color:#aaa;
+
+    font-size:13px;
+
+}
+
+
+
+
+.status{
+
+    margin-top:20px;
+
+    padding:10px;
+
+    text-align:center;
+
+    border-radius:30px;
+
+    font-weight:bold;
+
+}
+
+
+
+.status-vivo{
+
+    background:#d50000;
+
+}
+
+
+
+.status-proximo{
+
+    background:#005eff;
+
+}
+
+
+
+.status-final{
+
+    background:#555;
+
+}
+
+
+
+
+.campeonatos{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(200px,1fr));
+
+    gap:20px;
+
+}
+
+
+
+
+.campeonato-card{
+
+    background:#111;
+
+    border:1px solid #222;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    font-weight:bold;
+
+}
+
+
+
+.campeonato-card:hover{
+
+    border-color:#00ff66;
+
+}
+
+.botao-voltar{
+
+    display:inline-block;
+
+    margin-top:50px;
+
+    padding:14px 30px;
+
+    background:#00ff66;
+
+    color:#000;
+
+    text-decoration:none;
+
+    border-radius:30px;
+
+    font-weight:bold;
+
+}
+
+
+
+footer{
+
+    margin-top:60px;
+
+    padding:40px 20px;
+
+    text-align:center;
+
+    color:#888;
+
+    border-top:1px solid #222;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="futebol-page">
+
+
+<div class="topo-futebol">
+
+
+<div class="logo-futebol">
+
+PHZIN <span>TV</span>
+
+</div>
+
+
+<h1>
+
+⚽ Futebol em destaque
+
+</h1>
+
+
+<p>
+
+Confira jogos de hoje, próximos jogos e partidas ao vivo.
+
+</p>
+
+
+</div>
+
+
+
+
+
+<section>
+
+
+<h2 class="titulo-secao">
+
+⚽ Jogos de hoje
+
+</h2>
+
+
+<div id="jogosHoje" class="jogos-container">
+
+</div>
+
+
+</section>
+
+
+
+
+
+<section>
+
+
+<h2 class="titulo-secao">
+
+📅 Próximos jogos
+
+</h2>
+
+
+<div id="proximosJogos" class="jogos-container">
+
+</div>
+
+
+</section>
+
+
+
+
+
+<section>
+
+
+<h2 class="titulo-secao">
+
+🏆 Campeonatos
+
+</h2>
+
+
+
+<div class="campeonatos">
+
+
+
+<div class="campeonato-card">
+
+🇧🇷 Brasileirão Série A
+
+</div>
+
+
+
+<div class="campeonato-card">
+
+🏴 Premier League
+
+</div>
+
+
+
+<div class="campeonato-card">
+
+🇪🇸 La Liga
+
+</div>
+
+
+
+<div class="campeonato-card">
+
+⭐ Champions League
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<section>
+
+
+<h2 class="titulo-secao">
+
+🔥 Futebol em destaque
+
+</h2>
+
+
+<div id="destaques" class="jogos-container">
+
+</div>
+
+
+</section>
+
+
+
+
+
+<div style="text-align:center;">
+
+
+<a href="index.html" class="botao-voltar">
+
+← Voltar para o início
+
+</a>
+
+
+</div>
+
+
+
+
+
+<footer>
+
+
+<h2>
+
+PHZIN <span style="color:#00ff66;">TV</span>
+
+</h2>
+
+
+
+<p style="margin-top:10px;">
+
+© 2026 PHZIN TV
+
+</p>
+
+
+
+<p style="margin-top:8px;">
+
+Seu entretenimento, do seu jeito.
+
+</p>
+
+
+
+</footer>
+
+<script>
+
+
+async function carregarJogos(){
+
+
+try{
+
+
+const resposta = await fetch(
+"https://phzin-tv.onrender.com/api/jogos"
+);
+
+
+
+const jogos = await resposta.json();
+
+
+
+const agora = new Date();
+
+
+
+const hoje = agora.getFullYear() + "-" +
+
+String(agora.getMonth()+1).padStart(2,"0") + "-" +
+
+String(agora.getDate()).padStart(2,"0");
+
+
+
+const jogosHoje = document.getElementById("jogosHoje");
+
+const proximosJogos = document.getElementById("proximosJogos");
+
+const destaques = document.getElementById("destaques");
+
+
+
+jogosHoje.innerHTML = "";
+
+proximosJogos.innerHTML = "";
+
+destaques.innerHTML = "";
+
+
+
+
+
+jogos.forEach(jogo=>{
+
+
+
+let statusClass = "status-proximo";
+
+
+
+if(jogo.status === "AO VIVO"){
+
+statusClass = "status-vivo";
+
+}
+
+
+
+if(jogo.status === "ENCERRADO"){
+
+statusClass = "status-final";
+
+}
+
+
+
+
+let placar = "";
+
+
+
+if(
+jogo.placar_casa !== "-"
+&&
+jogo.placar_fora !== "-"
+){
+
+
+placar = `
+
+<div class="placar">
+
+<div class="resultado">
+
+${jogo.placar_casa}
+x
+${jogo.placar_fora}
+
+</div>
+
+
+<div class="vs">
+
+PLACAR
+
+</div>
+
+
+</div>
+
+`;
+
+
+}else{
+
+
+placar = `
+
+<div class="placar">
+
+<div class="resultado">
+
+VS
+
+</div>
+
+
+<div class="vs">
+
+PRÓXIMO JOGO
+
+</div>
+
+
+</div>
+
+`;
+
+}
+
+
+
+
+const card = `
+
+
+<div class="jogo-card">
+
+
+<div class="campeonato">
+
+🏆 ${jogo.campeonato}
+
+</div>
+
+
+
+<div class="data">
+
+📅 ${jogo.data}
+
+<br>
+
+⏰ ${jogo.hora}
+
+</div>
+
+
+
+
+<div class="times">
+
+
+
+<div class="time">
+
+
+<img
+
+src="${jogo.imagem_casa}"
+
+onerror="this.src='https://placehold.co/60x60/111111/00ff66?text=⚽';"
+
+>
+
+
+${jogo.time_casa}
+
+
+</div>
+
+
+
+
+${placar}
+
+
+
+
+
+<div class="time">
+
+
+<img
+
+src="${jogo.imagem_fora}"
+
+onerror="this.src='https://placehold.co/60x60/111111/00ff66?text=⚽';"
+
+>
+
+
+${jogo.time_fora}
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+<div class="status ${statusClass}">
+
+${jogo.status}
+
+</div>
+
+
+
+</div>
+
+
+`;
+
+
+
+
+
+if(jogo.data_original === hoje){
+
+
+jogosHoje.innerHTML += card;
+
+
+
+}else{
+
+
+proximosJogos.innerHTML += card;
+
+
+}
+
+
+
+
+if(jogo.status === "AO VIVO"){
+
+
+destaques.innerHTML += card;
+
+
+}
+
+
+
+});
+
+
+
+}
+
+
+catch(erro){
+
+
+
+console.log(
+"Erro ao carregar jogos:",
+erro
+);
+
+
+
+document.getElementById("jogosHoje").innerHTML = `
+
+<div class="jogo-card">
+
+<h2 style="color:#ff4444">
+
+Erro ao carregar jogos
+
+</h2>
+
+<p>
+
+Verifique a conexão com a API.
+
+</p>
+
+
+</div>
+
+`;
+
+
+
+}
+
+
+
+}
+
+
+
+
+carregarJogos();
+
+
+
+setInterval(
+
+carregarJogos,
+
+60000
+
+);
+
+
+
+</script>
+
+
+</div>
+
+
+</body>
+
+
+</html>
