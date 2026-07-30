@@ -1,5 +1,5 @@
-from flask import Flask, render_template, jsonify
 from datetime import datetime
+import pytz
 
 from filmes import filmes_populares, filmes_destaque
 from futebol_api import buscar_jogos
