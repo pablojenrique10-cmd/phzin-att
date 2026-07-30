@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filme | PHZIN TV</title>
+  <meta name="description" content="Assista filmes e séries na PHZIN TV com uma experiência inspirada na Netflix.">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Estilos para o trailer de fundo em loop */
+    .movie-hero {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+
+    .movie-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -2;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+    }
+
+    .movie-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.65); /* Camada escura para dar leitura no texto */
+      z-index: -1;
+    }
+
+    .movie-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      padding: 40px 20px;
+    }
+  </style>
+</head>
+<body class="movie-page">
+  <section class="movie-hero">
+    
+    <video
+      id="movieVideo"
+      class="movie-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto">
+      <source id="movieVideoSource" src="" type="video/mp4">
+    </video>
+
+    <div class="movie-overlay"></div>
+
+    <div class="movie-content">
+      <a href="index.html#filmes" class="back-button">← Voltar para filmes</a>
+
+      <div class="movie-layout">
+        <div class="movie-poster">
+          <img id="filmeImagem" src="" alt="Pôster do filme" loading="eager">
+        </div>
+
+        <div class="movie-info">
+          <span id="filmeCategoria" class="movie-category"></span>
+
+          <h1 id="filmeNome">Carregando...</h1>
+
+          <div class="movie-meta">
+            <span id="ano">2025</span>
+            <span id="genero">Ação</span>
+            <span id="duracao">2h 20m</span>
+            <span id="classificacao">16+</span>
+          </div>
+
+          <p id="filmeDescricao">
+            Carregando informações do filme...
+          </p>
+
+          <div class="movie-actions">
+            <a class="primary-button watch-button" target="_blank" rel="noopener"
+               href="https://wa.me/554396317934?text=Olá!%20Vim%20pelo%20site%20da%20PHZIN%20TV%20e%20quero%20assinar.">
+              ▶ Assistir Agora
+            </a>
+
+            <a id="trailerBtn" class="secondary-button" target="_blank" rel="noopener"
+               href="https://www.youtube.com">
+              🎥 Ver Trailer
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <section class="recommendations">
+        <div class="section-header">
+          <h2>Você também pode gostar</h2>
+          <span>Recomendados para você</span>
+        </div>
+
+        <div id="recomendados" class="recommend-grid"></div>
+      </section>
+    </div>
+  </section>
+
+  <script>
+    // Exemplo de banco de dados simples para trocar o vídeo de fundo conforme a URL/Filme selecionado
+    const filmesData = {
+      "interestelar": {
+        nome: "Interestelar",
+        categoria: "MAIS POPULAR",
+        ano: "2014",
+        genero: "Ficção Científica",
+        duracao: "2h 49m",
+        classificacao: "10+",
+        descricao: "As reservas naturais da Terra estão chegando ao fim e um grupo de astronautas recebe a missão de verificar quais planetas podem receber a raça humana.",
+        imagem: "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+        video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" // Substitua pelo link .mp4 do trailer
+      },
+      "o-batman": {
+        nome: "O Batman",
+        categoria: "EM ALTA",
+        ano: "2022",
+        genero: "Ação / Policial",
+        duracao: "2h 56m",
+        classificacao: "14+",
+        descricao: "Batman explora a corrupção em Gotham City enquanto persegue o Charada, um assassino em série que ataca a elite da cidade.",
+        imagem: "https://image.tmdb.org/t/p/w500/74xTEgt7R36Fpooo50r9T25onhq.jpg",
+        video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4" // Substitua pelo link .mp4 do trailer
+      }
+      // Adicione os outros filmes aqui mantendo a chave igual ao parâmetro URL (?filme=nome)
+    };
+
+    // Função para carregar os dados na página
+    function carregarFilme() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const filmeParam = urlParams.get('filme');
+
+      if (filmeParam && filmesData[filmeParam]) {
+        const dados = filmesData[filmeParam];
+
+        document.getElementById('filmeNome').innerText = dados.nome;
+        document.getElementById('filmeCategoria').innerText = dados.categoria;
+        document.getElementById('ano').innerText = dados.ano;
+        document.getElementById('genero').innerText = dados.genero;
+        document.getElementById('duracao').innerText = dados.duracao;
+        document.getElementById('classificacao').innerText = dados.classificacao;
+        document.getElementById('filmeDescricao').innerText = dados.descricao;
+        document.getElementById('filmeImagem').src = dados.imagem;
+
+        // Atualiza o Vídeo de Fundo e da Play no Loop
+        const videoElement = document.getElementById('movieVideo');
+        const videoSource = document.getElementById('movieVideoSource');
+
+        videoSource.src = dados.video;
+        videoElement.load();
+        videoElement.play().catch(error => {
+          console.log("Autoplay impedido pelo navegador, tentando novamente mudo:", error);
+        });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', carregarFilme);
+  </script>
+
+  <script src="filme.js"></script>
+</body>
+</html>

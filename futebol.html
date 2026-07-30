@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PHZIN TV | Futebol</title>
+
+<link rel="stylesheet" href="style.css">
+
+
+<style>
+
+body{
+
+    margin:0;
+    background:#050505;
+    color:white;
+    font-family:Arial, Helvetica, sans-serif;
+
+}
+
+
+.futebol-page{
+
+    min-height:100vh;
+    padding:40px 20px;
+
+}
+
+
+
+.topo-futebol{
+
+    text-align:center;
+    margin-bottom:40px;
+
+}
+
+
+.logo-futebol{
+
+    font-size:35px;
+    font-weight:bold;
+
+}
+
+
+.logo-futebol span{
+
+    color:#00ff66;
+
+}
+
+
+
+.topo-futebol h1{
+
+    font-size:40px;
+    margin:15px 0;
+
+}
+
+
+.topo-futebol p{
+
+    color:#aaa;
+    font-size:18px;
+
+}
+
+
+
+/* GRID DOS JOGOS */
+
+.jogos-container{
+
+    max-width:1100px;
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(280px,1fr));
+
+    gap:25px;
+
+}
+
+
+
+
+/* CARD */
+
+.jogo-card{
+
+
+    background:
+    linear-gradient(
+        145deg,
+        #101010,
+        #181818
+    );
+
+
+    border:1px solid #222;
+
+    border-radius:20px;
+
+    padding:25px;
+
+    text-align:center;
+
+    transition:.3s;
+
+
+}
+
+
+
+.jogo-card:hover{
+
+    transform:translateY(-5px);
+
+    border-color:#00ff66;
+
+}
+
+
+
+
+
+.campeonato{
+
+    color:#00ff66;
+
+    font-weight:bold;
+
+    font-size:15px;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.data{
+
+    color:#aaa;
+
+    margin-bottom:20px;
+
+}
+
+
+
+
+.times{
+
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:20px;
+
+
+}
+
+
+
+.time{
+
+
+    width:100px;
+
+    font-weight:bold;
+
+    font-size:14px;
+
+
+}
+
+
+
+.time img{
+
+
+    width:55px;
+
+    height:55px;
+
+    object-fit:contain;
+
+    display:block;
+
+    margin:auto;
+
+    margin-bottom:10px;
+
+
+}
+
+
+
+.vs{
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    color:#fff;
+
+}
+
+
+
+
+
+.placar{
+
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:25px;
+
+    font-size:32px;
+
+    font-weight:bold;
+
+    color:#00ff66;
+
+    margin:15px 0;
+
+
+}
+
+
+.placar .vs{
+
+    font-size:18px;
+
+    color:white;
+
+}
+
+
+
+.status{
+
+
+    margin-top:20px;
+
+    padding:8px 15px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+
+}
+
+
+.status-vivo{
+
+    background:#ff0033;
+
+}
+
+
+.status-proximo{
+
+    background:#0066ff;
+
+}
+
+
+.status-final{
+
+    background:#444;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="futebol-page">
+
+
+<div class="topo-futebol">
+
+
+<div class="logo-futebol">
+
+PHZIN <span>TV</span>
+
+</div>
+
+
+<h1>
+
+⚽ Futebol em destaque
+
+</h1>
+
+
+<p>
+
+Confira os próximos jogos e partidas ao vivo.
+
+</p>
+
+
+</div>
+<div class="jogos-container">
+
+
+{% if jogos %}
+
+
+{% for jogo in jogos %}
+
+
+<div class="jogo-card">
+
+
+<div class="campeonato">
+
+🏆 {{ jogo.campeonato }}
+
+</div>
+
+
+
+<div class="data">
+
+📅 {{ jogo.data }}
+
+<br>
+
+⏰ {{ jogo.hora }}
+
+</div>
+
+
+
+
+<div class="times">
+
+
+
+<div class="time">
+
+
+{% if jogo.imagem_casa %}
+
+<img src="{{ jogo.imagem_casa }}">
+
+{% endif %}
+
+
+{{ jogo.time_casa }}
+
+
+</div>
+
+
+
+
+
+{% if jogo.placar_casa != "-" and jogo.placar_fora != "-" %}
+
+
+<div class="placar">
+
+
+<span>
+
+{{ jogo.placar_casa }}
+
+</span>
+
+
+<div class="vs">
+
+VS
+
+</div>
+
+
+<span>
+
+{{ jogo.placar_fora }}
+
+</span>
+
+
+</div>
+
+
+
+{% else %}
+
+
+
+<div class="vs">
+
+VS
+
+</div>
+
+
+
+{% endif %}
+
+
+
+
+
+
+
+<div class="time">
+
+
+{% if jogo.imagem_fora %}
+
+<img src="{{ jogo.imagem_fora }}">
+
+{% endif %}
+
+
+{{ jogo.time_fora }}
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+{% if jogo.status == "AO VIVO" %}
+
+
+<div class="status status-vivo">
+
+🔴 AO VIVO
+
+</div>
+
+
+
+{% elif jogo.status == "ENCERRADO" %}
+
+
+
+<div class="status status-final">
+
+⚫ ENCERRADO
+
+</div>
+
+
+
+{% else %}
+
+
+
+<div class="status status-proximo">
+
+🔵 PRÓXIMO JOGO
+
+</div>
+
+
+
+{% endif %}
+
+
+
+</div>
+
+
+
+{% endfor %}
+
+
+
+{% else %}
+
+
+<div class="jogo-card">
+
+
+<h3>
+
+Nenhum jogo encontrado.
+
+</h3>
+
+
+</div>
+
+
+
+{% endif %}
+
+
+
+</div>
+
+<div style="text-align:center; margin-top:40px;">
+
+
+<a href="/" 
+style="
+display:inline-block;
+padding:12px 25px;
+background:#00ff66;
+color:#000;
+font-weight:bold;
+border-radius:30px;
+text-decoration:none;
+">
+
+← Voltar para PHZIN TV
+
+</a>
+
+
+</div>
+
+
+
+</div>
+
+
+
+<footer style="
+text-align:center;
+padding:40px 20px;
+color:#777;
+">
+
+
+<h2 style="color:white;">
+
+PHZIN <span style="color:#00ff66;">TV</span>
+
+</h2>
+
+
+<p>
+
+© 2026 PHZIN TV
+
+</p>
+
+
+<p>
+
+Seu entretenimento, do seu jeito.
+
+</p>
+
+
+</footer>
+
+
+
+
+
+<script>
+
+
+// Atualiza os jogos automaticamente
+
+setInterval(function(){
+
+
+fetch("https://seu-app.onrender.com/api/jogos")
+
+.then(response => response.json())
+
+.then(dados => {
+
+
+console.log("Jogos atualizados", dados);
+
+
+// recarrega a página para atualizar cards
+
+location.reload();
+
+
+})
+
+
+.catch(erro => {
+
+console.log(
+"Erro ao atualizar jogos",
+erro
+);
+
+});
+
+
+},60000);
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
